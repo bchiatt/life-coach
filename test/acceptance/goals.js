@@ -39,6 +39,58 @@ describe('goals', function(){
     });
   });
 
+  describe('get /register', function(){
+    it('should fetch the registration page', function(done){
+      request(app)
+      .get('/register')
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        expect(res.text).to.include('Register');
+        expect(res.text).to.include('Submit');
+        done();
+      });
+    });
+  });
+
+  describe('get /login', function(){
+    it('should fetch the login page', function(done){
+      request(app)
+      .get('/login')
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        expect(res.text).to.include('Login');
+        expect(res.text).to.include('Submit');
+        done();
+      });
+    });
+  });
+
+  describe('post /register', function(){
+    it('should register a new user', function(done){
+      request(app)
+      .post('/register')
+      .send('email=steve@example.com')
+      .send('password=5678')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
+  describe('post /register', function(){
+    it('should not register a new user', function(done){
+      request(app)
+      .post('/register')
+      .send('email=bob@example.com')
+      .send('password=1234')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
   describe('get /goals/new', function(){
     it('should fetch the new goals page', function(done){
       request(app)
@@ -49,6 +101,17 @@ describe('goals', function(){
         expect(res.text).to.include('Name');
         expect(res.text).to.include('Due');
         expect(res.text).to.include('Tags');
+        done();
+      });
+    });
+  });
+
+  describe('get /goals/new', function(){
+    it('should not fetch the new goals page without authentication', function(done){
+      request(app)
+      .get('/goals/new')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
         done();
       });
     });
