@@ -65,6 +65,19 @@ describe('goals', function(){
     });
   });
 
+  describe('post /login', function(){
+    it('should not log in a user when incorrect password', function(done){
+      request(app)
+      .post('/login')
+      .send('email=bob@example.com')
+      .send('password=abcd')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
   describe('post /register', function(){
     it('should register a new user', function(done){
       request(app)
@@ -84,6 +97,17 @@ describe('goals', function(){
       .post('/register')
       .send('email=bob@example.com')
       .send('password=1234')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
+  describe('delete /logout', function(){
+    it('should logout a user', function(done){
+      request(app)
+      .delete('/logout')
       .end(function(err, res){
         expect(res.status).to.equal(302);
         done();
