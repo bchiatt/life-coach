@@ -1,6 +1,8 @@
 'use strict';
 
-var Mongo = require('mongodb');
+var Mongo = require('mongodb'),
+    Task  = require('./task'),
+    _     = require('lodash');
 
 function Goal(o, userId){
   this.userId = userId;
@@ -26,6 +28,22 @@ Goal.findAllByUserId = function(userId, cb){
 
 Goal.findByGoalIdAndUserId = function(goalId, userId, cb){
   var _id = Mongo.ObjectID(goalId);
-  Goal.collection.findOne({_id:_id, userId:userId}, cb);
+  Goal.collection.findOne({_id:_id, userId:userId}, function(err, object){
+    if(object){
+      cb(err, _.create(Goal.prototype, object));
+    }else{
+      cb();
+    }
+  });
 };
+
+Goal.prototype.addTask = function(body){
+  var task = new Task(body);
+  this.tasks.push(task);
+};
+
+Goal.prototype.save = function(cb){
+  Goal.collection.save(this, cb);
+};
+
 module.exports = Goal;

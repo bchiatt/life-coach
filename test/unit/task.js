@@ -22,7 +22,7 @@ describe('Task', function(){
     });
   });
 
-  describe('.create', function(){
+  describe('constructor', function(){
     it('should create a task', function(){
       var body   = {name:'Buy Monopoly', difficulty:'Easy', description:'Go shopping', rank:'1'},
           task   = new Task(body);

@@ -105,4 +105,17 @@ describe('goals', function(){
       });
     });
   });
+
+  describe('post /goals/3/tasks', function(){
+    it('should create a task for a specific goal', function(done){
+      request(app)
+      .post('/goals/a00000000000000000000001/tasks')
+      .set('cookie', cookie)
+      .send('name=Buy+Monopoly&description=Get+the+board+game.&difficulty=Easy&rank=1')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
 });

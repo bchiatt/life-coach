@@ -59,5 +59,19 @@ describe('Goal', function(){
       });
     });
   });
+
+  describe('.addTask', function(){
+    it('should add a task to the goal', function(done){
+      var userId = Mongo.ObjectID('000000000000000000000001'),
+          goalId = 'a00000000000000000000002',
+          body   = {name:'Buy Monopoly', difficulty:'Easy', description:'Go shopping', rank:'1'};
+      Goal.findByGoalIdAndUserId(goalId, userId, function(err, goal){
+        goal.addTask(body);
+        expect(goal.tasks).to.have.length(1);
+        expect(goal.tasks[0].rank).to.equal(1);
+        done();
+      });
+    });
+  });
 });
 

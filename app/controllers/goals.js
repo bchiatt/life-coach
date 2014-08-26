@@ -21,10 +21,17 @@ exports.index = function(req, res){
 
 exports.show = function(req, res){
   Goal.findByGoalIdAndUserId(req.params.goalId, res.locals.user._id, function(err, goal){
-    if(goal){
-      res.render('goals/show', {goal:goal, moment:moment});
-    }else{
-      res.redirect('/');
-    }
+    if(!goal){res.redirect('/');}
+    res.render('goals/show', {goal:goal, moment:moment});
+  });
+};
+
+exports.addTask = function(req, res){
+  Goal.findByGoalIdAndUserId(req.params.goalId, res.locals.user._id, function(err, goal){
+    if(!goal){res.redirect('/');}
+    goal.addTask(req.body);
+    goal.save(function(){
+      res.redirect('/goals/' + req.params.goalId);
+    });
   });
 };
