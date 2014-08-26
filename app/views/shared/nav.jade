@@ -12,6 +12,7 @@
       ul.nav.navbar-nav.navbar-right
         if user
           li: a(href='/goals/new') New Goal
+          li: a(href='/goals') Goals
           li
             form.navbar-form(method='post', action='/logout')
               .form-group

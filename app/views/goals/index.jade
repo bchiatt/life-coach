@@ -1,0 +1,23 @@
+extends ../shared/template
+block content
+  .row
+    .col-xs-2
+    .col-xs-8
+      .panel.panel-success
+        .panel-heading All Goals
+        table.table.table-hover
+          thead
+            tr
+              th Goal
+              th Due
+              th Tags
+          tbody
+            each goal in goals
+              tr
+                td: a(href='/goals/#{goal._id}')=goal.name
+                td= moment(goal.due).format('MMMM DD, YYYY')
+                td= goal.tags
+    .col-xs-2
+
+block scripts
+

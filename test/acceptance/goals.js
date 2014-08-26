@@ -55,11 +55,50 @@ describe('goals', function(){
   });
 
   describe('post /goals', function(){
-    it('should redirect to the goals index page', function(done){
+    it('should create a new goal and redirect to the goals index page', function(done){
       request(app)
       .post('/goals')
       .set('cookie', cookie)
       .send('name=become+awesome&due=2020-03-14&tags=this%2C+that%2C+and+other')
+      .end(function(err, res){
+        expect(res.status).to.equal(302);
+        done();
+      });
+    });
+  });
+
+  describe('get /goals', function(){
+    it('should fetch the goals index page', function(done){
+      request(app)
+      .get('/goals')
+      .set('cookie', cookie)
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        expect(res.text).to.include('doctor');
+        expect(res.text).to.include('marathon');
+        done();
+      });
+    });
+  });
+
+  describe('get /goals/3', function(){
+    it('should fetch a specific goal page', function(done){
+      request(app)
+      .get('/goals/a00000000000000000000001')
+      .set('cookie', cookie)
+      .end(function(err, res){
+        expect(res.status).to.equal(200);
+        expect(res.text).to.include('marathon');
+        done();
+      });
+    });
+  });
+
+  describe('get /goals/3', function(){
+    it('should not fetch a specific goal page', function(done){
+      request(app)
+      .get('/goals/a00000000000000000000003')
+      .set('cookie', cookie)
       .end(function(err, res){
         expect(res.status).to.equal(302);
         done();

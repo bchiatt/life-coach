@@ -1,7 +1,7 @@
 ## name of project
 ### Code Badges
-build status icon
-coverage status icon
+[![Build Status](https://travis-ci.org/bchiatt/life-coach.svg)](https://travis-ci.org/bchiatt/life-coach)
+[![Coverage Status](https://coveralls.io/repos/bchiatt/life-coach/badge.png)](https://coveralls.io/r/bchiatt/life-coach)
 
 ### About
 write a description about your project
